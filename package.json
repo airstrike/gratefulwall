@@ -1,11 +1,14 @@
 {
   "name": "bun-ts",
   "author": "dayblox",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
   "description": "Bun + TypeScript starter",
   "scripts": {
     "start": "bun src/index.ts"
   },
-  "devDependencies": {
-    "@types/bun": "latest"
+  "dependencies": {
+    "postgres": "^3.4.3"
   }
 }

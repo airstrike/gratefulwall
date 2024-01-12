@@ -1,0 +1,207 @@
+body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, sans-serif; /* regular */;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.outlined {
+    color: white;
+    text-shadow:
+      -1px -1px 0 darkcyan,
+       0   -1px 0 darkcyan,
+       1px -1px 0 darkcyan,
+       1px  0   0 darkcyan,
+       1px  1px 0 darkcyan,
+       0    1px 0 darkcyan,
+      -1px  1px 0 darkcyan,
+      -1px  0   0 darkcyan;
+  }
+
+#gratitude-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%; /* Making the form wider */
+    margin-bottom: 20px;
+    background: radial-gradient(#f0f0f0, #f0f0f0, #f0f0f0, transparent, transparent);
+    padding: 40px;
+}
+
+#gratitude-form .form-title {
+    text-align: center; /* Center-align text for all children */
+    width: 100%; /* Take full width to center content */
+}
+
+h1.wall-title {
+    color: darkturquoise;
+    letter-spacing: 1px;
+    margin: 0; /* Remove default margins to center properly */
+}
+
+#gratitude-form h4 {
+    margin: 10px auto; /* Remove default margins to center properly */
+}
+
+.extra-row {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.extra-row .optional {
+    flex: 1; /* Each input takes equal space */
+}
+
+#gratitude-form textarea, #gratitude-form input, #gratitude-form button {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, sans-serif; /* regular */;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+#gratitude-form textarea {
+    padding: 10px;
+    margin: 10px 10px;
+}
+#gratitude-form input {
+    padding: 10px 10px;
+    margin: 10px 0;
+}
+#gratitude-form button {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: darkturquoise;
+    color: white;
+}
+
+.input-row {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+
+.input-row input {
+    flex: 1; /* Each input takes equal space */
+}
+
+#old-messages-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Behind the form */
+    padding: 20px; /* Add some padding */
+} */
+
+#bad-grid-messages-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    grid-auto-rows: min-content; /* Each row takes only necessary space */
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Allows scrolling if content overflows */
+    z-index: -1; /* Behind the form */
+    padding: 20px; /* Add some padding */
+}
+
+#messages-container {
+    column-count: 5; /* 5 columns */
+    column-gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Allows scrolling if content overflows */
+    z-index: -1; /* Behind the form */
+    padding: 20px; /* Add some padding */
+}
+
+.old-message {
+    font-family: 'Gloria Hallelujah', cursive;
+    opacity: 0.5;
+    break-inside: avoid-column; /* Prevents breaking inside a message */
+    margin-bottom: 10px; /* Space between messages */
+    /* Keep other styles as they are */
+}
+
+.message {
+    font-family: 'Gloria Hallelujah', cursive;
+    opacity: 0.8;
+    break-inside: avoid-column; /* Prevents breaking inside a message */
+    margin-bottom: 10px; /* Space between messages */
+    display: flex;
+    flex-direction: column; /* Aligns children elements in a column */
+    text-align: center;
+}
+
+.message p {
+    margin-bottom: 0;
+}
+
+span#success {
+    color: darkcyan;
+}
+span#error {
+    color: firebrick;
+}
+.hidden {
+    visibility: hidden;
+}
+
+.initials::before {
+    content: '—'; /* Dash before initials */
+    margin-right: 5px;
+}
+
+.initials, .location {
+    width: 100%; /* Forces initials and location to take the full width */
+    margin-top: 5px; /* Add some space above initials and location */
+}
+
+.initials {
+    text-align: center;
+    order: 1; /* Ensures initials come first */
+    color: #666;
+}
+
+.location {
+    margin-top: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 0.8em;
+    order: 2; /* Ensures location comes after initials */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #666;
+}
+
+/* Define color classes */
+.color-01 { color: #e6194B; }
+.color-02 { color: #3cb44b; }
+.color-03 { color: goldenrod; }
+.color-04 { color: royalblue; }
+.color-05 { color: #f58231; }
+.color-06 { color: navy; }
+.color-07 { color: darkcyan; }
+.color-08 { color: #f032e6; }
+.color-09 { color: #72a910; }
+.color-10 { color: gray; }
+.color-11 { color: brown; }
+.color-12 { color: indigo; }
+.color-13 { color: #aa6e28; }
+.color-14 { color: teal; }

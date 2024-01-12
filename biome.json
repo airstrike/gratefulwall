@@ -3,7 +3,8 @@
 	"files": { "ignore": ["node_modules/*"] },
 	"javascript": {
 		"formatter": {
-			"semicolons": "asNeeded"
+			"semicolons": "asNeeded",
+			"indentWidth": 4
 		}
 	}
 }
