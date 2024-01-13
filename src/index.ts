@@ -1,3 +1,4 @@
+import moment from "moment"
 import postgres from "postgres"
 
 // const sql = postgres("postgres://username:password@host:port/database", {
@@ -101,6 +102,7 @@ async function handlePostRequest(req: Request) {
 		const message = formData.get("message")?.toString().trim()
 		const initials = formData.get("initials")?.toString().trim() || null
 		const location = formData.get("location")?.toString().trim() || null
+		const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
 
 		// Basic validation
 		if (!message || message.length > 500) {
@@ -120,7 +122,7 @@ async function handlePostRequest(req: Request) {
 
 		// Insert data into the database
 		await sql`
-        INSERT INTO wall (message, initials, location) VALUES (${message}, ${initials}, ${location});
+        INSERT INTO wall (message, initials, location, created_at) VALUES (${message}, ${initials}, ${location}, ${created_at});
       `
 		// Invalidate the cache
 		messageCache = null

@@ -120,7 +120,7 @@ h1.wall-title {
 }
 
 #messages-container {
-    column-count: 5; /* 5 columns */
+    column-count: 4; /* 5 columns */
     column-gap: 10px;
     position: absolute;
     top: 0;
@@ -144,10 +144,18 @@ h1.wall-title {
     font-family: 'Gloria Hallelujah', cursive;
     opacity: 0.8;
     break-inside: avoid-column; /* Prevents breaking inside a message */
-    margin-bottom: 10px; /* Space between messages */
+    margin-bottom: 5px; /* Space between messages */
     display: flex;
     flex-direction: column; /* Aligns children elements in a column */
     text-align: center;
+}
+.user-message {
+    font-weight: bold;
+}
+
+/* Cobblestone effect */
+.message:nth-child(odd) {
+    margin-bottom: 5px; /* Adjust the offset value as needed */
 }
 
 .message p {
@@ -160,9 +168,29 @@ span#success {
 span#error {
     color: firebrick;
 }
-.hidden {
-    visibility: hidden;
+
+@keyframes fadeOutAndUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-30px); /* Adjust as needed */
+    }
 }
+
+.submitted {
+    animation-duration: 2s; /* Adjust duration as needed */
+    animation-fill-mode: forwards; /* Keeps the element in the state of the last animation frame */
+    animation-name: fadeOutAndUp;
+    animation-timing-function: ease-in;
+}
+
+.hidden {
+    display: none;
+}
+
 
 .initials::before {
     content: '—'; /* Dash before initials */
@@ -190,7 +218,7 @@ span#error {
     color: #666;
 }
 
-/* Define color classes */
+/* Define color classes that have sufficient contrast */
 .color-01 { color: #e6194B; }
 .color-02 { color: #3cb44b; }
 .color-03 { color: goldenrod; }
@@ -205,3 +233,10 @@ span#error {
 .color-12 { color: indigo; }
 .color-13 { color: #aa6e28; }
 .color-14 { color: teal; }
+.color-15 { color: firebrick; }
+.color-16 { color: darkred; }
+.color-17 { color: darkslategray; }
+.color-18 { color: darkorange; }
+.color-19 { color: darkolivegreen; }
+.color-20 { color: darkgoldenrod; }
+.color-21 { color: cornflowerblue; }

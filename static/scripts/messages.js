@@ -1,13 +1,6 @@
-// Function to assign random color classes
-// function assignRandomColorClass(element) {
-// 	const colorClass = `color-${String(
-// 		Math.floor(Math.random() * 14) + 1,
-// 	).padStart(2, "0")}`
-// 	element.classList.add(colorClass)
-// }
 function assignRandomColorClass() {
 	const colorClass = `color-${String(
-		Math.floor(Math.random() * 14) + 1,
+		Math.floor(Math.random() * 21) + 1,
 	).padStart(2, "0")}`
 	return colorClass
 }
@@ -36,8 +29,7 @@ function makeColorGradient(
 	len,
 ) {
 	const colors = []
-	let i = 0
-	for (i = 0; i < len; ++i) {
+	for (let i = 0; i < len; ++i) {
 		const red = Math.sin(frequency1 * i + phase1) * width + center
 		const grn = Math.sin(frequency2 * i + phase2) * width + center
 		const blu = Math.sin(frequency3 * i + phase3) * width + center
@@ -54,7 +46,7 @@ function shuffleArray(array) {
 	return array
 }
 
-// Usage
+// Generate and shuffle colors
 const colorFrequency = 2.4
 const gradientColors = makeColorGradient(
 	colorFrequency,
@@ -68,12 +60,7 @@ const gradientColors = makeColorGradient(
 	14,
 )
 const shuffledColors = shuffleArray(gradientColors)
-
 // Assign colors to messages
-const messages = document.querySelectorAll("#messages-container .message")
-messages.forEach((message, index) => {
-	message.style.color = shuffledColors[index % shuffledColors.length]
-})
 
 // Function to load messages from the server
 async function loadMessages() {
@@ -110,12 +97,17 @@ document.getElementById("form").addEventListener("submit", async function (e) {
 		body: formData,
 	})
 
+	const formElement = document.getElementById("form")
 	const successSpan = document.getElementById("success")
 	const errorSpan = document.getElementById("error")
 
 	if (response.ok) {
-		document.getElementById("submit").classList.add("hidden")
-		successSpan.classList.remove("hidden")
+		formElement.classList.add("hidden") // Hide form immediately
+		successSpan.classList.remove("hidden") // Show success message
+
+		// Add the 'submitted' class to start the animation
+		const gratitudeForm = document.getElementById("gratitude-form")
+		gratitudeForm.classList.add("submitted")
 
 		// Append the new message to the top of the messages-container
 		const container = document.getElementById("messages-container")
@@ -124,9 +116,15 @@ document.getElementById("form").addEventListener("submit", async function (e) {
 		newMessageDiv.innerHTML = `
             <p class="content">
                 <span class="message">${formData.get("message")}</span>
-                <span class="initials">${formData.get("initials") || ""}</span>
+                <span class="initials">${
+					formData.get("initials") || "Anonymous"
+				}</span>
             </p>
-            <p class="location">${formData.get("location") || ""}</p>
+            ${
+				formData.get("location")
+					? `<p class="location">${formData.get("location")}</p>`
+					: ""
+			}
         `
 		container.prepend(newMessageDiv)
 	} else {
@@ -138,3 +136,8 @@ document.getElementById("form").addEventListener("submit", async function (e) {
 
 // Call loadMessages on page load
 loadMessages()
+
+const messages = document.querySelectorAll("#messages-container .message")
+messages.forEach((message, index) => {
+	message.style.color = shuffledColors[index % shuffledColors.length]
+})

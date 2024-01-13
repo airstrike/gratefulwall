@@ -9,6 +9,7 @@
     "start": "bun src/index.ts"
   },
   "dependencies": {
+    "moment": "^2.30.1",
     "postgres": "^3.4.3"
   }
 }
