@@ -15,15 +15,16 @@
       <div class="form-title">
         <h1 class="outlined wall-title">The Grand Gratitude Wall</h1>
         <h4>January 10-14, 2024</h4>
+        <span id="success" class="hidden">Message sent!</span>
       </div>
       <form id="gratitude-form" action="/submit" method="post">
         <div class="message-row">
-          <input
-            type="text"
+          <textarea
             name="message"
             id="message"
-            placeholder="What are you grateful for today at this event?"
-          />
+            rows="3"
+            placeholder="What are you grateful for at this event?"
+          ></textarea>
         </div>
         <div class="extra-row">
           <input
@@ -46,10 +47,11 @@
         </div>
         <span id="error" class="hidden"></span>
       </form>
-      <span id="success" class="hidden">Message sent!</span>
     </div>
 
     <div id="messages-container" class="not-loaded"></div>
+
+    <footer>Built with love by The Grand Spartans</footer>
     <script src="/scripts/messages.js"></script>
   </body>
 </html>

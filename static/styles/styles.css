@@ -32,6 +32,24 @@ body {
     padding: 40px;
 }
 
+#gratitude-form-wrapper form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#gratitude-form-wrapper .message-row,
+#gratitude-form-wrapper .extra-row,
+#gratitude-form-wrapper .submit-row {
+    display: flex;
+    justify-content: center;
+}
+
+#gratitude-form-wrapper .message-row { width: 57%; }
+#gratitude-form-wrapper .extra-row { width: 55%; }
+#gratitude-form-wrapper .submit-row { width: 50%; }
+
 #gratitude-form-wrapper .form-title {
     text-align: center; /* Center-align text for all children */
     width: 100%; /* Take full width to center content */
@@ -153,14 +171,23 @@ span#error {
 }
 
 .submitted {
-    animation-duration: 2s; /* Adjust duration as needed */
+    animation-duration: 0.5s; /* Adjust duration as needed */
     animation-fill-mode: forwards; /* Keeps the element in the state of the last animation frame */
     animation-name: fadeOutAndUp;
-    animation-timing-function: ease-in;
+    animation-timing-function: ease-out;
+}
+.idden.submitted {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+    position: absolute;
+    visibility: none;
 }
 
 .hidden {
     display: none;
+    height: 0;
+    width: 0;
 }
 
 
@@ -212,3 +239,17 @@ span#error {
 .color-19 { color: darkolivegreen; }
 .color-20 { color: darkgoldenrod; }
 .color-21 { color: cornflowerblue; }
+
+/* Footer Styles */
+footer {
+    position: fixed; /* Makes the footer stay at the bottom */
+    left: 0;
+    bottom: 0;
+    width: 100%; /* Full width */
+    background-color: #e0e0e0; /* Dark background for visibility */
+    color: #999; /* Light text color for contrast */
+    text-align: center; /* Centers the text */
+    padding: 10px 0; /* Small padding for spacing */
+    font-size: 0.8em; /* Smaller font size */
+    opacity: 0.8;
+}
