@@ -159,4 +159,5 @@ messages.forEach((message, index) => {
 
 document.getElementById("close-button").addEventListener("click", () => {
 	document.getElementById("gratitude-form-wrapper").style.display = "none"
+	document.getElementById("fixed-header").classList.add("submitted")
 })
