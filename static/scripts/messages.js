@@ -72,11 +72,12 @@ async function loadMessages() {
 		container.classList.add("loaded")
 
 		for (const message of messages) {
+			if (!message.message) continue
 			const messageDiv = document.createElement("div")
 			messageDiv.className = `message ${assignRandomColorClass()}`
 			messageDiv.innerHTML = `
                 <p class="content">
-                    <span class="message">${message.message}</span>
+                    <span class="message">"${message.message}"</span>
                     <span class="initials">${message.initials || ""}</span>
                 </p>
                 <p class="location">${message.location || ""}</p>
@@ -88,34 +89,47 @@ async function loadMessages() {
 	}
 }
 // Function to handle form submission
-document.getElementById("form").addEventListener("submit", async function (e) {
-	e.preventDefault()
+document
+	.getElementById("gratitude-form")
+	.addEventListener("submit", async function (e) {
+		e.preventDefault()
 
-	const formData = new FormData(this)
-	const response = await fetch("/submit", {
-		method: "POST",
-		body: formData,
-	})
+		const formData = new FormData(this)
+		const formDataObj = Object.fromEntries(formData.entries())
+		const formDataStr = new URLSearchParams(formDataObj).toString()
 
-	const formElement = document.getElementById("form")
-	const successSpan = document.getElementById("success")
-	const errorSpan = document.getElementById("error")
+		const response = await fetch("/submit", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			body: formDataStr,
+		})
 
-	if (response.ok) {
-		formElement.classList.add("hidden") // Hide form immediately
-		successSpan.classList.remove("hidden") // Show success message
+		const formElement = document.getElementById("gratitude-form")
+		const successSpan = document.getElementById("success")
+		const errorSpan = document.getElementById("error")
 
-		// Add the 'submitted' class to start the animation
-		const gratitudeForm = document.getElementById("gratitude-form")
-		gratitudeForm.classList.add("submitted")
+		console.log(response)
 
-		// Append the new message to the top of the messages-container
-		const container = document.getElementById("messages-container")
-		const newMessageDiv = document.createElement("div")
-		newMessageDiv.className = `message user-message ${assignRandomColorClass()}`
-		newMessageDiv.innerHTML = `
+		if (response.ok) {
+			formElement.classList.add("hidden") // Hide form immediately
+			successSpan.classList.remove("hidden") // Show success message
+
+			// Add the 'submitted' class to start the animation
+			const gratitudeFormWrapper = document.getElementById(
+				"gratitude-form-wrapper",
+			)
+			const gratitudeForm = document.getElementById("gratitude-form")
+			gratitudeForm.classList.add("submitted")
+
+			// Append the new message to the top of the messages-container
+			const container = document.getElementById("messages-container")
+			const newMessageDiv = document.createElement("div")
+			newMessageDiv.className = `message user-message ${assignRandomColorClass()}`
+			newMessageDiv.innerHTML = `
             <p class="content">
-                <span class="message">${formData.get("message")}</span>
+                <span class="message">"${formData.get("message")}"</span>
                 <span class="initials">${
 					formData.get("initials") || "Anonymous"
 				}</span>
@@ -126,13 +140,13 @@ document.getElementById("form").addEventListener("submit", async function (e) {
 					: ""
 			}
         `
-		container.prepend(newMessageDiv)
-	} else {
-		const errorMsg = await response.text()
-		errorSpan.textContent = errorMsg
-		errorSpan.classList.remove("hidden")
-	}
-})
+			container.prepend(newMessageDiv)
+		} else {
+			const errorMsg = await response.text()
+			errorSpan.textContent = errorMsg
+			errorSpan.classList.remove("hidden")
+		}
+	})
 
 // Call loadMessages on page load
 loadMessages()

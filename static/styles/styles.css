@@ -22,7 +22,7 @@ body {
       -1px  0   0 darkcyan;
   }
 
-#gratitude-form {
+#gratitude-form-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,7 +32,7 @@ body {
     padding: 40px;
 }
 
-#gratitude-form .form-title {
+#gratitude-form-wrapper .form-title {
     text-align: center; /* Center-align text for all children */
     width: 100%; /* Take full width to center content */
 }
@@ -43,7 +43,7 @@ h1.wall-title {
     margin: 0; /* Remove default margins to center properly */
 }
 
-#gratitude-form h4 {
+#gratitude-form-wrapper h4 {
     margin: 10px auto; /* Remove default margins to center properly */
 }
 
@@ -57,22 +57,22 @@ h1.wall-title {
     flex: 1; /* Each input takes equal space */
 }
 
-#gratitude-form textarea, #gratitude-form input, #gratitude-form button {
+#gratitude-form-wrapper textarea, #gratitude-form-wrapper input, #gratitude-form-wrapper button {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, sans-serif; /* regular */;
     width: 100%;
     border-radius: 10px;
     border: 1px solid #ccc;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
-#gratitude-form textarea {
+#gratitude-form-wrapper textarea {
     padding: 10px;
     margin: 10px 10px;
 }
-#gratitude-form input {
+#gratitude-form-wrapper input {
     padding: 10px 10px;
     margin: 10px 0;
 }
-#gratitude-form button {
+#gratitude-form-wrapper button {
     width: 50%;
     padding: 10px;
     margin: 10px 0;
@@ -90,43 +90,15 @@ h1.wall-title {
     flex: 1; /* Each input takes equal space */
 }
 
-#old-messages-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 columns */
-    gap: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1; /* Behind the form */
-    padding: 20px; /* Add some padding */
-} */
-
-#bad-grid-messages-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 columns */
-    grid-auto-rows: min-content; /* Each row takes only necessary space */
-    gap: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Allows scrolling if content overflows */
-    z-index: -1; /* Behind the form */
-    padding: 20px; /* Add some padding */
-}
-
 #messages-container {
     column-count: 4; /* 5 columns */
     column-gap: 10px;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 90%;
     height: 100%;
+    margin: 0 auto;
     overflow: auto; /* Allows scrolling if content overflows */
     z-index: -1; /* Behind the form */
     padding: 20px; /* Add some padding */

@@ -1,62 +1,110 @@
+import path from "path"
+import bodyParser from "body-parser"
+import express from "express"
 import moment from "moment"
 import postgres from "postgres"
 
-// const sql = postgres("postgres://username:password@host:port/database", {
+import { fileURLToPath } from "url"
+const CURRENT_DIR = path.dirname(fileURLToPath(import.meta.url))
+const PROJECT_ROOT = path.join(CURRENT_DIR, "..") // Navigate up one level to get the project root
+
+// PostgreSQL setup
 const sql = postgres({
-	host: Bun.env.PGHOST, // Postgres ip address[s] or domain name[s]
-	port: Number(Bun.env.PGPORT) || 5432, // Postgres server port[s]
-	database: Bun.env.PGDATABASE, // Name of database to connect to
-	username: Bun.env.PGUSER, // Username of database user
-	password: Bun.env.PGPASSWORD, // Password of database user
+	host: Bun.env.PGHOST,
+	port: Number(Bun.env.PGPORT) || 5432,
+	database: Bun.env.PGDATABASE,
+	username: Bun.env.PGUSER,
+	password: Bun.env.PGPASSWORD,
 })
 
-// TABLE def:
-// CREATE TABLE wall (id SERIAL PRIMARY KEY, message TEXT NOT NULL, initials VARCHAR, locations VARCHAR, created_at TIMESTAMP);
+// Express setup
+const app = express()
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-import { serve } from "bun"
+// Serve static files
+app.use("/styles", express.static(path.join(PROJECT_ROOT, "static", "styles")))
+app.use(
+	"/scripts",
+	express.static(path.join(PROJECT_ROOT, "static", "scripts")),
+)
 
-serve({
-	fetch(req: Request) {
-		const { pathname } = new URL(req.url)
+// Root endpoint to serve HTML file
+app.get("/", (req, res) => {
+	res.sendFile(path.join(PROJECT_ROOT, "static", "index.html"))
+})
 
-		// Serve the HTML file on root access
-		if (pathname === "/") {
-			return new Response(Bun.file("./static/index.html"), {
-				headers: {
-					"Content-Type": "text/html",
-				},
-			})
+// Messages endpoint
+app.get("/messages", async (req, res) => {
+	try {
+		const messages = await fetchMessages()
+		res.json(messages)
+	} catch (error) {
+		console.error("Error fetching messages:", error)
+		res.status(500).send("Error processing request")
+	}
+})
+
+// Submit endpoint
+app.post("/submit", async (req, res) => {
+	try {
+		const { message, initials, location } = req.body
+		// remove non ASCII, whitespace, numbers and punctuation
+		const cleanMessage = message
+			.replace(/[^\w\s]|_/g, "")
+			.replace(/\s+/g, " ")
+			.replace(/[0-9]/g, "")
+			.replace(/;/g, ",")
+			.trim()
+		const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
+
+		// Basic validation
+		console.log(cleanMessage, initials, location, created_at)
+		if (!cleanMessage) {
+			console.log(
+				`${created_at} User posted invalid blank message (empty): ${message}`,
+			)
+			res.status(400).send("Please enter a message ")
+		}
+		if (cleanMessage.length > 500) {
+			console.log(
+				`${created_at} User posted invalid message (too long): ${message}`,
+			)
+			res.status(400).send("Message is too long (500 chars max)")
 		}
 
-		// Serve files from the /static/ directory
-		if (
-			pathname.startsWith("/styles/") ||
-			pathname.startsWith("/scripts/")
-		) {
-			try {
-				return new Response(Bun.file(`./static${pathname}`), {
-					headers: {
-						"Content-Type": "text/css",
-					},
-				})
-			} catch (error) {
-				return new Response("File not found", { status: 404 })
-			}
+		if (initials && initials.length > 50) {
+			console.log(
+				`${created_at} User posted invalid initials: ${initials}`,
+			)
+			res.status(400).send("Invalid initials")
 		}
 
-		// Fetch messages
-		if (pathname === "/messages" && req.method === "GET") {
-			return handleGetMessages(req)
+		if (location && location.length > 100) {
+			console.log(
+				`${created_at} User posted invalid location: ${location}`,
+			)
+			res.status(400).send("Invalid initials")
 		}
 
-		// Handle POST request
-		if (pathname === "/submit" && req.method === "POST") {
-			return handlePostRequest(req)
-		}
+		// Insert data into the database
+		await sql`
+        INSERT INTO wall (message, initials, location, created_at) VALUES (${cleanMessage}, ${initials}, ${location}, ${created_at});
+      `
+		// Invalidate the cache
+		messageCache = null
 
-		// 404 for any other endpoints
-		return new Response("Not Found", { status: 404 })
-	},
+		res.send("Message received")
+	} catch (error) {
+		console.error("Error handling POST request:", error)
+		res.status(500).send("Error processing request")
+	}
+})
+
+// Start the server
+const PORT = 3000
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`)
 })
 
 interface Message {
@@ -105,18 +153,22 @@ async function handlePostRequest(req: Request) {
 		const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
 
 		// Basic validation
+		console.log(message, initials, location, created_at)
 		if (!message || message.length > 500) {
 			// Example length check
+			console.error("Invalid message")
 			return new Response("Invalid message", { status: 400 })
 		}
 
 		if (initials && initials.length > 50) {
 			// Example length check
+			console.error("Invalid initials")
 			return new Response("Invalid initials", { status: 400 })
 		}
 
 		if (location && location.length > 100) {
 			// Example length check
+			console.error("Invalid location")
 			return new Response("Invalid location", { status: 400 })
 		}
 
