@@ -253,3 +253,20 @@ footer {
     font-size: 0.8em; /* Smaller font size */
     opacity: 0.8;
 }
+
+@media only screen and (max-width: 768px) {
+    #gratitude-form-wrapper {
+        width: 90%;
+    }
+    /* Adjust form rows to be 100% wide */
+    #gratitude-form-wrapper .message-row,
+    #gratitude-form-wrapper .extra-row,
+    #gratitude-form-wrapper .submit-row {
+        width: 90%;
+    }
+
+    /* Adjust the wall to have 2 columns */
+    #messages-container {
+        column-count: 2;
+    }
+}
