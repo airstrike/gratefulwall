@@ -66,10 +66,13 @@ const shuffledColors = shuffleArray(gradientColors)
 async function loadMessages() {
 	try {
 		const response = await fetch("/messages")
-		const messages = await response.json()
+		let messages = await response.json()
 		const container = document.getElementById("messages-container")
 		container.classList.remove("not-loaded")
 		container.classList.add("loaded")
+
+		// Shuffle the messages array
+		messages = shuffleArray(messages)
 
 		for (const message of messages) {
 			if (!message.message) continue
