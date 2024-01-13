@@ -26,7 +26,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%; /* Making the form wider */
+    /* width: 50%; Making the form wider */
+    width: 90%;
     margin-bottom: 20px;
     background: radial-gradient(#f0f0f0, #f0f0f0, #f0f0f0, transparent, transparent);
     padding: 40px;
@@ -36,7 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 50%;
 }
 
 #gratitude-form-wrapper .message-row,
@@ -46,12 +47,13 @@ body {
     justify-content: center;
 }
 
-#gratitude-form-wrapper .message-row { width: 57%; }
-#gratitude-form-wrapper .extra-row { width: 55%; }
-#gratitude-form-wrapper .submit-row { width: 50%; }
+#gratitude-form-wrapper .message-row { width: 100%; }
+#gratitude-form-wrapper .extra-row { width: 100%; }
+#gratitude-form-wrapper .submit-row { width: 100%; }
 
 #gratitude-form-wrapper .form-title {
     text-align: center; /* Center-align text for all children */
+    position: relative;
     width: 100%; /* Take full width to center content */
 }
 
@@ -59,6 +61,10 @@ h1.wall-title {
     color: darkturquoise;
     letter-spacing: 1px;
     margin: 0; /* Remove default margins to center properly */
+}
+
+#gratitude-form-wrapper h1 {
+    padding-top: 25px;
 }
 
 #gratitude-form-wrapper h4 {
@@ -75,7 +81,7 @@ h1.wall-title {
     flex: 1; /* Each input takes equal space */
 }
 
-#gratitude-form-wrapper textarea, #gratitude-form-wrapper input, #gratitude-form-wrapper button {
+#gratitude-form-wrapper textarea, #gratitude-form-wrapper input, #gratitude-form-wrapper button#submit {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, sans-serif; /* regular */;
     width: 100%;
     border-radius: 10px;
@@ -90,7 +96,7 @@ h1.wall-title {
     padding: 10px 10px;
     margin: 10px 0;
 }
-#gratitude-form-wrapper button {
+#gratitude-form-wrapper button#submit {
     width: 50%;
     padding: 10px;
     margin: 10px 0;
@@ -178,14 +184,6 @@ span#error {
     animation-timing-function: ease-out;
 }
 
-.idden.submitted {
-    height: 0;
-    overflow: hidden;
-    width: 0;
-    position: absolute;
-    visibility: none;
-}
-
 .hidden {
     display: none;
     height: 0;
@@ -258,13 +256,17 @@ footer {
 
 @media only screen and (max-width: 768px) {
     #gratitude-form-wrapper {
-        width: 90%;
+        width: 400px;
+    }
+
+    #gratitude-form-wrapper form {
+        width: 80%;
     }
     /* Adjust form rows to be 100% wide */
     #gratitude-form-wrapper .message-row,
     #gratitude-form-wrapper .extra-row,
     #gratitude-form-wrapper .submit-row {
-        width: 90%;
+        width: 100%;
     }
 
     /* Adjust the wall to have 2 columns */
@@ -306,3 +308,21 @@ footer {
     }
 }
 
+
+
+
+.close-form-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.close-form-button img {
+    display: block;
+    width: 20px; /* Adjust as needed */
+    height: 20px; /* Adjust as needed */
+}

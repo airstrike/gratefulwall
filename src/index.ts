@@ -107,7 +107,7 @@ app.post("/submit", async (req, res) => {
 		// 	"INSERT INTO wall (message, initials, location, created_at) VALUES ($1, $2, $3, $4);",
 		// 	[message, initials, location, created_at],
 		// )
-		messageCache = null
+		invalidateMessageQuery()
 
 		res.send("Message received")
 	} catch (error) {
@@ -130,24 +130,41 @@ interface Message {
 	created_at: Date
 }
 
-let messageCache: Message[] | null = null
+// let messageCache: Message[] | null = null
+interface MessageCache {
+	messages: Message[] | null
+	lastUpdated: Date | null
+}
+
+let messageCache: MessageCache = {
+	messages: null,
+	lastUpdated: null,
+}
 
 async function fetchMessages(): Promise<Message[]> {
-	if (!messageCache) {
+	// Check if cache is older than 5 minutes
+	if (
+		!messageCache.messages ||
+		!messageCache.lastUpdated ||
+		new Date().getTime() - messageCache.lastUpdated.getTime() >
+			5 * 60 * 1000
+	) {
+		// Fetch from database and update cache
 		const result = await sql<
 			Message[]
 		>`SELECT * FROM wall ORDER BY created_at DESC LIMIT 100;`
-		messageCache = result
-		// const { rows } = await pool.query(
-		// 	"SELECT * FROM wall ORDER BY created_at DESC LIMIT 100;",
-		// )
-		// messageCache = rows
+		messageCache.messages = result
+		messageCache.lastUpdated = new Date()
 	}
-	return messageCache
+	return messageCache.messages
 }
 
 function invalidateMessageQuery() {
-	messageCache = null
+	// Invalidate cache
+	messageCache = {
+		messages: null,
+		lastUpdated: new Date(), // Optionally update the timestamp to the current time
+	}
 }
 
 async function handleGetMessages(req: Request) {
@@ -202,7 +219,7 @@ async function handlePostRequest(req: Request) {
 		// )
 
 		// Invalidate the cache
-		messageCache = null
+		invalidateMessageQuery()
 
 		return new Response("Message received", { status: 200 })
 	} catch (error) {

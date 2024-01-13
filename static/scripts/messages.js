@@ -156,3 +156,7 @@ const messages = document.querySelectorAll("#messages-container .message")
 messages.forEach((message, index) => {
 	message.style.color = shuffledColors[index % shuffledColors.length]
 })
+
+document.getElementById("close-button").addEventListener("click", () => {
+	document.getElementById("gratitude-form-wrapper").style.display = "none"
+})
