@@ -115,13 +115,15 @@ h1.wall-title {
 }
 
 #messages-container {
-    column-count: 4; /* 5 columns */
+    column-count: 4;
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Hides horizontal overflow */
     column-gap: 10px;
     position: absolute;
     top: 0;
     left: 0;
     width: 90%;
-    height: 100%;
+    height: auto;
     margin: 0 auto;
     overflow: auto; /* Allows scrolling if content overflows */
     z-index: -1; /* Behind the form */
@@ -129,7 +131,7 @@ h1.wall-title {
 }
 
 .old-message {
-    font-family: 'Gloria Hallelujah', cursive;
+    font-family: 'Goria Hallelujah', cursive;
     opacity: 0.5;
     break-inside: avoid-column; /* Prevents breaking inside a message */
     margin-bottom: 10px; /* Space between messages */
