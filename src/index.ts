@@ -9,20 +9,20 @@ const CURRENT_DIR = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.join(CURRENT_DIR, "..") // Navigate up one level to get the project root
 
 // PostgreSQL setup
+console.warn({
+	host: Bun.env.PGHOST,
+	port: Number(Bun.env.PGPORT) || 5432,
+	database: Bun.env.PGDATABASE,
+	username: Bun.env.PGUSER,
+	password: "hunter2",
+})
+
 const sql = postgres({
 	host: Bun.env.PGHOST,
 	port: Number(Bun.env.PGPORT) || 5432,
 	database: Bun.env.PGDATABASE,
 	username: Bun.env.PGUSER,
 	password: Bun.env.PGPASSWORD,
-})
-
-console.log({
-	host: Bun.env.PGHOST,
-	port: Number(Bun.env.PGPORT) || 5432,
-	database: Bun.env.PGDATABASE,
-	username: Bun.env.PGUSER,
-	password: "hunter2",
 })
 
 // Express setup
