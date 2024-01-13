@@ -2,28 +2,35 @@ import path from "path"
 import bodyParser from "body-parser"
 import express from "express"
 import moment from "moment"
-import postgres from "postgres"
+import pg from "pg"
+import postgres from "postgres" // Replace 'PostgresClient' with the actual type from your library
+
+// Connect to the database using the DATABASE_URL environment
+//   variable injected by Railway
+const pool = new pg.Pool()
 
 import { fileURLToPath } from "url"
 const CURRENT_DIR = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.join(CURRENT_DIR, "..") // Navigate up one level to get the project root
 
-// PostgreSQL setup
-console.warn({
-	host: Bun.env.PGHOST,
-	port: Number(Bun.env.PGPORT) || 5432,
-	database: Bun.env.PGDATABASE,
-	username: Bun.env.PGUSER,
-	password: "hunter2",
-})
-
-const sql = postgres({
-	host: Bun.env.PGHOST,
-	port: Number(Bun.env.PGPORT) || 5432,
-	database: Bun.env.PGDATABASE,
-	username: Bun.env.PGUSER,
-	password: Bun.env.PGPASSWORD,
-})
+let sql: ReturnType<typeof postgres>
+if (Bun.env.DATABASE_PRIVATE_URL) {
+	sql = postgres(Bun.env.DATABASE_PRIVATE_URL)
+} else {
+	console.log({
+		host: Bun.env.PGHOST,
+		port: Number(Bun.env.PGPORT) || 5432,
+		database: Bun.env.PGDATABASE,
+		username: Bun.env.PGUSER,
+	})
+	sql = postgres({
+		host: Bun.env.PGHOST,
+		port: Number(Bun.env.PGPORT) || 5432,
+		database: Bun.env.PGDATABASE,
+		username: Bun.env.PGUSER,
+		password: Bun.env.PGPASSWORD,
+	})
+}
 
 // Express setup
 const app = express()
@@ -97,9 +104,13 @@ app.post("/submit", async (req, res) => {
 
 		// Insert data into the database
 		await sql`
-        INSERT INTO wall (message, initials, location, created_at) VALUES (${cleanMessage}, ${initials}, ${location}, ${created_at});
-      `
+		    INSERT INTO wall (message, initials, location, created_at) VALUES (${cleanMessage}, ${initials}, ${location}, ${created_at});
+		  `
 		// Invalidate the cache
+		// await pool.query(
+		// 	"INSERT INTO wall (message, initials, location, created_at) VALUES ($1, $2, $3, $4);",
+		// 	[message, initials, location, created_at],
+		// )
 		messageCache = null
 
 		res.send("Message received")
@@ -110,7 +121,8 @@ app.post("/submit", async (req, res) => {
 })
 
 // Start the server
-const PORT = Bun.env.PORT || 3000
+// const PORT = Bun.env.PORT || 3000
+const PORT = 3000
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`)
 })
@@ -131,6 +143,10 @@ async function fetchMessages(): Promise<Message[]> {
 			Message[]
 		>`SELECT * FROM wall ORDER BY created_at DESC LIMIT 100;`
 		messageCache = result
+		// const { rows } = await pool.query(
+		// 	"SELECT * FROM wall ORDER BY created_at DESC LIMIT 100;",
+		// )
+		// messageCache = rows
 	}
 	return messageCache
 }
@@ -182,8 +198,14 @@ async function handlePostRequest(req: Request) {
 
 		// Insert data into the database
 		await sql`
-        INSERT INTO wall (message, initials, location, created_at) VALUES (${message}, ${initials}, ${location}, ${created_at});
-      `
+		    INSERT INTO wall (message, initials, location, created_at) VALUES (${message}, ${initials}, ${location}, ${created_at});
+		  `
+		// Insert using pool
+		// await pool.query(
+		// 	"INSERT INTO wall (message, initials, location, created_at) VALUES ($1, $2, $3, $4);",
+		// 	[message, initials, location, created_at],
+		// )
+
 		// Invalidate the cache
 		messageCache = null
 
