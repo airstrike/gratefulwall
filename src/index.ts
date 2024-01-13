@@ -152,7 +152,8 @@ async function fetchMessages(): Promise<Message[]> {
 		// Fetch from database and update cache
 		const result = await sql<
 			Message[]
-		>`SELECT * FROM wall ORDER BY created_at DESC LIMIT 100;`
+			// >`SELECT * FROM wall ORDER BY created_at DESC LIMIT 100;`
+		>`SELECT * FROM wall ORDER BY RANDOM() LIMIT 100;`
 		messageCache.messages = result
 		messageCache.lastUpdated = new Date()
 	}

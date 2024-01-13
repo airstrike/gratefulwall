@@ -78,7 +78,7 @@ async function loadMessages() {
 			messageDiv.innerHTML = `
                 <p class="content">
                     <span class="message">"${message.message}"</span>
-                    <span class="initials">${message.initials || ""}</span>
+                    <span class="initials">${message.initials || "Anonymous"}</span>
                 </p>
                 <p class="location">${message.location || ""}</p>
             `
@@ -141,6 +141,9 @@ document
 					: ""
 			}
         `
+			// Clear the form so it's not filled the same way on reload
+			formElement.reset()
+
 			container.prepend(newMessageDiv)
 		} else {
 			const errorMsg = await response.text()
