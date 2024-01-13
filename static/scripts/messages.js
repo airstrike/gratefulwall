@@ -122,6 +122,7 @@ document
 			)
 			const gratitudeForm = document.getElementById("gratitude-form")
 			gratitudeForm.classList.add("submitted")
+			document.getElementById("fixed-header").classList.add("submitted")
 
 			// Append the new message to the top of the messages-container
 			const container = document.getElementById("messages-container")

@@ -11,13 +11,17 @@
     <link rel="stylesheet" href="/styles/styles.css" />
   </head>
   <body>
+    <div id="fixed-header" class="form-title hidden">
+      <h1 class="outlined wall-title">The Grand Gratitude Wall</h1>
+      <h4>January 10-14, 2024</h4>
+    </div>
+
     <div id="gratitude-form-wrapper">
-      <div class="form-title">
-        <h1 class="outlined wall-title">The Grand Gratitude Wall</h1>
-        <h4>January 10-14, 2024</h4>
-        <span id="success" class="hidden">Message sent!</span>
-      </div>
       <form id="gratitude-form" action="/submit" method="post">
+        <div class="form-title">
+          <h1 class="outlined wall-title">The Grand Gratitude Wall</h1>
+          <h4>January 10-14, 2024</h4>
+        </div>
         <div class="message-row">
           <textarea
             name="message"
@@ -47,6 +51,7 @@
         </div>
         <span id="error" class="hidden"></span>
       </form>
+      <span id="success" class="hidden">Message sent!</span>
     </div>
 
     <div id="messages-container" class="not-loaded"></div>
