@@ -2,12 +2,13 @@ import path from "path"
 import bodyParser from "body-parser"
 import express from "express"
 import moment from "moment"
-import pg from "pg"
+// import pg from "pg"
 import postgres from "postgres" // Replace 'PostgresClient' with the actual type from your library
+import validator from "validator"
 
 // Connect to the database using the DATABASE_URL environment
 //   variable injected by Railway
-const pool = new pg.Pool()
+// const pool = new pg.Pool()
 
 import { fileURLToPath } from "url"
 const CURRENT_DIR = path.dirname(fileURLToPath(import.meta.url))
@@ -64,13 +65,8 @@ app.get("/messages", async (req, res) => {
 app.post("/submit", async (req, res) => {
 	try {
 		const { message, initials, location } = req.body
-		// remove non ASCII, whitespace, numbers and punctuation
-		const cleanMessage = message
-			.replace(/[^\w\s]|_/g, "")
-			.replace(/\s+/g, " ")
-			.replace(/[0-9]/g, "")
-			.replace(/;/g, ",")
-			.trim()
+		const cleanMessage = validator.escape(message)
+
 		const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
 
 		// Basic validation
