@@ -88,7 +88,8 @@ app.post("/submit", async (req, res) => {
 		const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
 
 		// Basic validation
-		console.log(cleanMessage, initials, location, created_at)
+		// console.log(cleanMessage, initials, location, created_at)
+		console.log(`${created_at} "${message}" —${initials} @ ${location}`)
 		if (!cleanMessage) {
 			console.log(
 				`${created_at} User posted invalid blank message (empty): ${message}`,
