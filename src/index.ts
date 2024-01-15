@@ -68,7 +68,6 @@ app.get("/", (req, res) => {
 	res.sendFile(path.join(PROJECT_ROOT, "static", "index.html"))
 })
 
-// Messages endpoint
 app.get("/messages", async (req, res) => {
 	try {
 		const messages = await fetchMessages()
@@ -79,7 +78,6 @@ app.get("/messages", async (req, res) => {
 	}
 })
 
-// Submit endpoint
 app.post("/submit", async (req, res) => {
 	try {
 		const { message, initials, location } = req.body
