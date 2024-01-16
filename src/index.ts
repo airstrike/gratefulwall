@@ -14,42 +14,42 @@ import { fileURLToPath } from "url"
 const CURRENT_DIR = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.join(CURRENT_DIR, "..") // Navigate up one level to get the project root
 
-let sql: ReturnType<typeof postgres>
-let sqlError = false
-if (Bun.env.DATABASE_PRIVATE_URL) {
-	console.log(
-		`Trying to connect via private URL: ${Bun.env.DATABASE_PRIVATE_URL}`,
-	)
-	try {
-		sql = postgres(Bun.env.DATABASE_PRIVATE_URL)
-		console.log("Connected to database via private URL")
-	} catch (error) {
-		sqlError = true
-		console.log("Error connecting to via private URL")
-		console.error(error)
-		console.log("Trying to connect to via other env vars")
-	}
-}
-if (!Bun.env.DATABASE_PRIVATE_URL || sqlError) {
-	console.log({
-		host: Bun.env.PGHOST,
-		port: Number(Bun.env.PGPORT) || 5432,
-		database: Bun.env.PGDATABASE,
-		username: Bun.env.PGUSER,
-	})
-	try {
-		sql = postgres({
-			host: Bun.env.PGHOST,
-			port: Number(Bun.env.PGPORT) || 5432,
-			database: Bun.env.PGDATABASE,
-			username: Bun.env.PGUSER,
-			password: Bun.env.PGPASSWORD,
-		})
-		console.log("Connected to database with env vars")
-	} catch (error) {
-		console.error("Error connecting to database with env vars")
-	}
-}
+// let sql: ReturnType<typeof postgres>
+// let sqlError = false
+// if (Bun.env.DATABASE_PRIVATE_URL) {
+// 	console.log(
+// 		`Trying to connect via private URL: ${Bun.env.DATABASE_PRIVATE_URL}`,
+// 	)
+// 	try {
+// 		sql = postgres(Bun.env.DATABASE_PRIVATE_URL)
+// 		console.log("Connected to database via private URL")
+// 	} catch (error) {
+// 		sqlError = true
+// 		console.log("Error connecting to via private URL")
+// 		console.error(error)
+// 		console.log("Trying to connect to via other env vars")
+// 	}
+// }
+// if (!Bun.env.DATABASE_PRIVATE_URL || sqlError) {
+// 	console.log({
+// 		host: Bun.env.PGHOST,
+// 		port: Number(Bun.env.PGPORT) || 5432,
+// 		database: Bun.env.PGDATABASE,
+// 		username: Bun.env.PGUSER,
+// 	})
+// 	try {
+// 		sql = postgres({
+// 			host: Bun.env.PGHOST,
+// 			port: Number(Bun.env.PGPORT) || 5432,
+// 			database: Bun.env.PGDATABASE,
+// 			username: Bun.env.PGUSER,
+// 			password: Bun.env.PGPASSWORD,
+// 		})
+// 		console.log("Connected to database with env vars")
+// 	} catch (error) {
+// 		console.error("Error connecting to database with env vars")
+// 	}
+// }
 
 // Express setup
 const app = express()
