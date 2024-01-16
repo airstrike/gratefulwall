@@ -92,46 +92,49 @@ async function loadMessages() {
 	}
 }
 // Function to handle form submission
-document
-	.getElementById("gratitude-form")
-	.addEventListener("submit", async function (e) {
-		e.preventDefault()
+try {
+	document
+		.getElementById("gratitude-form")
+		.addEventListener("submit", async function (e) {
+			e.preventDefault()
 
-		const formData = new FormData(this)
-		const formDataObj = Object.fromEntries(formData.entries())
-		const formDataStr = new URLSearchParams(formDataObj).toString()
+			const formData = new FormData(this)
+			const formDataObj = Object.fromEntries(formData.entries())
+			const formDataStr = new URLSearchParams(formDataObj).toString()
 
-		const response = await fetch("/submit", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
-			},
-			body: formDataStr,
-		})
+			const response = await fetch("/submit", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: formDataStr,
+			})
 
-		const formElement = document.getElementById("gratitude-form")
-		const successSpan = document.getElementById("success")
-		const errorSpan = document.getElementById("error")
+			const formElement = document.getElementById("gratitude-form")
+			const successSpan = document.getElementById("success")
+			const errorSpan = document.getElementById("error")
 
-		console.log(response)
+			console.log(response)
 
-		if (response.ok) {
-			formElement.classList.add("hidden") // Hide form immediately
-			successSpan.classList.remove("hidden") // Show success message
+			if (response.ok) {
+				formElement.classList.add("hidden") // Hide form immediately
+				successSpan.classList.remove("hidden") // Show success message
 
-			// Add the 'submitted' class to start the animation
-			const gratitudeFormWrapper = document.getElementById(
-				"gratitude-form-wrapper",
-			)
-			const gratitudeForm = document.getElementById("gratitude-form")
-			gratitudeForm.classList.add("submitted")
-			document.getElementById("fixed-header").classList.add("submitted")
+				// Add the 'submitted' class to start the animation
+				const gratitudeFormWrapper = document.getElementById(
+					"gratitude-form-wrapper",
+				)
+				const gratitudeForm = document.getElementById("gratitude-form")
+				gratitudeForm.classList.add("submitted")
+				document
+					.getElementById("fixed-header")
+					.classList.add("submitted")
 
-			// Append the new message to the top of the messages-container
-			const container = document.getElementById("messages-container")
-			const newMessageDiv = document.createElement("div")
-			newMessageDiv.className = `message user-message ${assignRandomColorClass()}`
-			newMessageDiv.innerHTML = `
+				// Append the new message to the top of the messages-container
+				const container = document.getElementById("messages-container")
+				const newMessageDiv = document.createElement("div")
+				newMessageDiv.className = `message user-message ${assignRandomColorClass()}`
+				newMessageDiv.innerHTML = `
             <p class="content">
                 <span class="message">"${formData.get("message")}"</span>
                 <span class="initials">${
@@ -144,16 +147,17 @@ document
 					: ""
 			}
         `
-			// Clear the form so it's not filled the same way on reload
-			formElement.reset()
+				// Clear the form so it's not filled the same way on reload
+				formElement.reset()
 
-			container.prepend(newMessageDiv)
-		} else {
-			const errorMsg = await response.text()
-			errorSpan.textContent = errorMsg
-			errorSpan.classList.remove("hidden")
-		}
-	})
+				container.prepend(newMessageDiv)
+			} else {
+				const errorMsg = await response.text()
+				errorSpan.textContent = errorMsg
+				errorSpan.classList.remove("hidden")
+			}
+		})
+} catch {}
 
 // No longer call loadMessages on page load
 // loadMessages()
@@ -163,7 +167,61 @@ messages.forEach((message, index) => {
 	message.style.color = shuffledColors[index % shuffledColors.length]
 })
 
-document.getElementById("close-button").addEventListener("click", () => {
-	document.getElementById("gratitude-form-wrapper").style.display = "none"
-	document.getElementById("fixed-header").classList.add("submitted")
-})
+try {
+	document.getElementById("close-button").addEventListener("click", () => {
+		document.getElementById("gratitude-form-wrapper").style.display = "none"
+		document.getElementById("fixed-header").classList.add("submitted")
+	})
+} catch {}
+
+function b(s) {
+	const a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+	const pad = "="
+	const len = s.length
+	const apad = a + pad
+	let bits = 0
+	let o = ""
+	let x
+	let v
+	let c
+
+	for (let i = 0; i < len; i += 1) {
+		v = apad.indexOf(s.charAt(i))
+		if (v >= 0 && v < 32) {
+			x = (x << 5) | v
+			bits += 5
+			if (bits >= 8) {
+				c = (x >> (bits - 8)) & 0xff
+				o = o + String.fromCharCode(c)
+				bits -= 8
+			}
+		}
+	}
+
+	// Remaining bits are < 8
+	if (bits > 0) {
+		c = ((x << (8 - bits)) & 0xff) >> (8 - bits)
+		// Don't append a null terminator.
+		if (c !== 0) {
+			o = o + String.fromCharCode(c)
+		}
+	}
+	return o
+}
+
+async function replaceContact() {
+	const contact = document.querySelector(".contact")
+	const me = "M5ZGC5DJOR2WIZKAMFXGI6LUMVZHEYJOMNXW2==="
+	const me_base32_decoded = contact.addEventListener("mouseover", () => {
+		// replace the word 'Contact' with an email address, but only if it doesn't already have a class `link`
+		if (contact.classList.contains("link")) {
+			return
+		}
+		// add the class `link` to the contact element
+		contact.classList.add("link")
+		const h = contact.innerHTML
+		contact.innerHTML = `<a href="mailto: ${b(me)}">${h}</a>`
+	})
+}
+
+replaceContact()

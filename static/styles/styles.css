@@ -120,22 +120,15 @@ h1.wall-title {
     overflow-x: hidden; /* Hides horizontal overflow */
     column-gap: 10px;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 90%;
+    top: 50px;
+    left: 3vw;
+    width: 90vw;
     height: auto;
     margin: 0 auto;
     overflow: auto; /* Allows scrolling if content overflows */
     z-index: -1; /* Behind the form */
     padding: 20px; /* Add some padding */
-}
-
-.old-message {
-    font-family: 'Goria Hallelujah', cursive;
-    opacity: 0.5;
-    break-inside: avoid-column; /* Prevents breaking inside a message */
-    margin-bottom: 10px; /* Space between messages */
-    /* Keep other styles as they are */
+    padding-bottom: 70px;
 }
 
 .message {
@@ -274,6 +267,9 @@ footer {
     /* Adjust the wall to have 2 columns */
     #messages-container {
         column-count: 2;
+        left: 0;
+        width: 90%;
+        overflow-x: hidden;
     }
 }
     
@@ -332,4 +328,10 @@ footer {
     display: block;
     width: 20px; /* Adjust as needed */
     height: 20px; /* Adjust as needed */
+}
+
+span.contact {
+    /* looks like a link always */
+    color: #0000EE;
+    text-decoration: underline;
 }
