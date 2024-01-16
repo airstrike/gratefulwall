@@ -11,15 +11,15 @@
     <link rel="stylesheet" href="/styles/styles.css" />
   </head>
   <body>
-    <div id="fixed-header">
+    <div id="fixed-header" class="submitted">
       <div class="form-title">
         <h1 class="outlined wall-title">The Grand Gratitude Wall</h1>
         <h4>January 10-14, 2024</h4>
       </div>
     </div>
 
-    <div id="gratitude-form-wrapper">
-      <form id="gratitude-form" action="/submit" method="post">
+    <!-- <div id="gratitude-form-wrapper">
+      <form id="gratitude-form" class="submitted" action="/submit" method="post">
         <div class="form-title">
           <h1 class="outlined wall-title">The Grand Gratitude Wall</h1>
           <span id="close-button" class="close-form-button">
@@ -57,9 +57,339 @@
         <span id="error" class="hidden"></span>
       </form>
       <span id="success" class="hidden">Message sent!</span>
-    </div>
+    </div> -->
 
-    <div id="messages-container" class="not-loaded"></div>
+    <!-- <div id="messages-container" class="not-loaded"></div> -->
+    <div id="messages-container" class="loaded">
+      <div class="message color-08">
+        <p class="content">
+          <span class="message"
+            >"I am grateful for the excellent content delivered by the
+            speakers."</span
+          >
+          <span class="initials">Sean C.</span>
+        </p>
+        <p class="location">Maryland</p>
+      </div>
+      <div class="message color-08">
+        <p class="content">
+          <span class="message">"MAXimus TEAM 14!!!"</span>
+          <span class="initials">Kathy and Wil G</span>
+        </p>
+        <p class="location">Calgary Alberta Canada</p>
+      </div>
+      <div class="message color-14">
+        <p class="content">
+          <span class="message"
+            >"I loved everything about Business Mastery!!! The simplified
+            accounting lesson was the best I've ever seen. All the speakers, and
+            all the tactical action steps I can bring to my business to grow it
+            150%"</span
+          >
+          <span class="initials">Roger Nahas</span>
+        </p>
+        <p class="location">Toronto, Canada</p>
+      </div>
+      <div class="message color-07">
+        <p class="content">
+          <span class="message">"Saving a child's life"</span>
+          <span class="initials">Jason</span>
+        </p>
+        <p class="location">Seattle</p>
+      </div>
+      <div class="message color-20">
+        <p class="content">
+          <span class="message">"Por el conocimiento"</span>
+          <span class="initials">DL</span>
+        </p>
+        <p class="location">Texas</p>
+      </div>
+      <div class="message color-07">
+        <p class="content">
+          <span class="message">"Your story brand share"</span>
+          <span class="initials">AN</span>
+        </p>
+        <p class="location">Ca</p>
+      </div>
+      <div class="message color-14">
+        <p class="content">
+          <span class="message"
+            >"I’m grateful for all the knowledge attained here at Business
+            Mastery. Business keeps evolving so it’s nice to be here and
+            re-learn from the best. "</span
+          >
+          <span class="initials">Cynthia</span>
+        </p>
+        <p class="location">NJ</p>
+      </div>
+      <div class="message color-09">
+        <p class="content">
+          <span class="message"
+            >"I’m grateful for Keith Cunningham in teaching us the Harvard
+            Accounting program in Keys to the Vault simplicity! Thank
+            you!!!"</span
+          >
+          <span class="initials">Marlene Sorensen </span>
+        </p>
+        <p class="location">Armstrong, BC Canada</p>
+      </div>
+      <div class="message color-11">
+        <p class="content">
+          <span class="message">"I am grateful for my team!!! "</span>
+          <span class="initials">JP</span>
+        </p>
+        <p class="location"></p>
+      </div>
+      <div class="message color-15">
+        <p class="content">
+          <span class="message"
+            >"I am grateful that so many people are pouring into us and want us
+            to succeed. Nothing held back. "</span
+          >
+          <span class="initials">Theresa Beneteau </span>
+        </p>
+        <p class="location">Ontario Canada</p>
+      </div>
+      <div class="message color-16">
+        <p class="content">
+          <span class="message">"I’m grateful for Keith Cunningham."</span>
+          <span class="initials">Jillian</span>
+        </p>
+        <p class="location">NYC</p>
+      </div>
+      <div class="message color-12">
+        <p class="content">
+          <span class="message"
+            >"Beyond thankful for receiving the one-on-one advice from the great
+            Don Miller and for the abundant support from everyone on the Zoom!
+            This has been an incredible experience!"</span
+          >
+          <span class="initials">Andy Terra</span>
+        </p>
+        <p class="location"></p>
+      </div>
+      <div class="message color-16">
+        <p class="content">
+          <span class="message">"Saving a child's life"</span>
+          <span class="initials">Anonymous</span>
+        </p>
+        <p class="location"></p>
+      </div>
+      <div class="message color-02">
+        <p class="content">
+          <span class="message"
+            >"I’m grateful for the opportunity to be here 🙏🏼. I’m thankful for
+            like minded people who believe we can create something better! Thank
+            you to the leaders in this space. "</span
+          >
+          <span class="initials">Renee Jennings</span>
+        </p>
+        <p class="location">Texas</p>
+      </div>
+      <div class="message color-01">
+        <p class="content">
+          <span class="message"
+            >"I’m so very grateful for this Tony Robbins family."</span
+          >
+          <span class="initials">Shelly</span>
+        </p>
+        <p class="location">Sarasota, FL</p>
+      </div>
+      <div class="message color-02">
+        <p class="content">
+          <span class="message"
+            >"I have huge clarity, and a plan, that I can execute on and have a
+            huge impact and money!"</span
+          >
+          <span class="initials">CH</span>
+        </p>
+        <p class="location">Scottsdale</p>
+      </div>
+      <div class="message color-16">
+        <p class="content">
+          <span class="message"
+            >"The best Accounting Lesson ever from Keith Cunningham. I know
+            accounting and that was really good"</span
+          >
+          <span class="initials">Joseph Bayer</span>
+        </p>
+        <p class="location">NJ</p>
+      </div>
+      <div class="message color-02">
+        <p class="content">
+          <span class="message"
+            >"I am Grateful for the Love that is so abundant."</span
+          >
+          <span class="initials">Alex G</span>
+        </p>
+        <p class="location">Conroe, TX</p>
+      </div>
+      <div class="message color-17">
+        <p class="content">
+          <span class="message"
+            >"I’m grateful for my business mastery family "</span
+          >
+          <span class="initials">Anonymous</span>
+        </p>
+        <p class="location"></p>
+      </div>
+      <div class="message color-07">
+        <p class="content">
+          <span class="message"
+            >"Immensely grateful for the transformative experience and
+            connections gained here. Success truly blossoms when we focus beyond
+            ourselves."</span
+          >
+          <span class="initials">Andy</span>
+        </p>
+        <p class="location">Miami, FL</p>
+      </div>
+      <div class="message color-06">
+        <p class="content">
+          <span class="message"
+            >"I'm Grateful for this moment, which is everything."</span
+          >
+          <span class="initials">Gina B</span>
+        </p>
+        <p class="location">Conroe, TX</p>
+      </div>
+      <div class="message color-07">
+        <p class="content">
+          <span class="message"
+            >"The One-Liner, by Don Miller, a great effective way to clarify the
+            message on my product!!!"</span
+          >
+          <span class="initials">Marlene Sorensen </span>
+        </p>
+        <p class="location">Armstrong, BC, Canada</p>
+      </div>
+      <div class="message color-02">
+        <p class="content">
+          <span class="message"
+            >"Coming to the virtual mastery is been a very inspiring knowing
+            that I have to physically get healthy, implement systems I've been
+            thinking about and just get it done, just Nike... Love All Y'All
+            10X...!!"</span
+          >
+          <span class="initials">Bubba C</span>
+        </p>
+        <p class="location">Portlandia</p>
+      </div>
+      <div class="message color-03">
+        <p class="content">
+          <span class="message"
+            >"We are grateful to have the resources to participate in Business
+            Mastery, learn a tremendous amount of information, and make great
+            connections. Thank you all for the friendship and camaraderie. Life
+            WILL never be the same!!!!"</span
+          >
+          <span class="initials">James &amp; Michelle</span>
+        </p>
+        <p class="location">Denver, CO</p>
+      </div>
+      <div class="message color-07">
+        <p class="content">
+          <span class="message"
+            >"I'm Really Grateful to Tony Robbins for the many lives he has
+            touched, including me and my husband. "</span
+          >
+          <span class="initials">Gina B</span>
+        </p>
+        <p class="location">Texas</p>
+      </div>
+      <div class="message color-17">
+        <p class="content">
+          <span class="message">"Being at bm"</span>
+          <span class="initials">A</span>
+        </p>
+        <p class="location"></p>
+      </div>
+      <div class="message color-13">
+        <p class="content">
+          <span class="message"
+            >"I am truly grateful to Tony Robbins and his organization for this
+            week of transformative experiences and connections and all the
+            growing and learning that has taken place. I am a grateful gladiator
+            who will be a platinum partner within 2yrs. Thank you "</span
+          >
+          <span class="initials">Dyniece Abril</span>
+        </p>
+        <p class="location">San Francisco, CA</p>
+      </div>
+      <div class="message color-18">
+        <p class="content">
+          <span class="message"
+            >"Trusting one's heart over the mind is the essence of true wisdom;
+            in the mind alone, we may lose ourselves. I’m deeply thankful for
+            the inspiring lessons and touched by the heartwarming generosity
+            I've witnessed. Thank you, everyone! "</span
+          >
+          <span class="initials">ViVi T</span>
+        </p>
+        <p class="location">USA 🇺🇸</p>
+      </div>
+      <div class="message color-20">
+        <p class="content">
+          <span class="message">"Possibility"</span>
+          <span class="initials">Wei La Femina</span>
+        </p>
+        <p class="location">Fort Lauderdale</p>
+      </div>
+      <div class="message color-12">
+        <p class="content">
+          <span class="message"
+            >"I am grateful for the transformative journey and the synergy!!!
+            LIFE WILL NEVER BE THE SAME!!! With love &amp; light, Pilar
+            ❤️🙏🏽"</span
+          >
+          <span class="initials">Pilar DeLaCruz</span>
+        </p>
+        <p class="location">New York/ New Jersey</p>
+      </div>
+      <div class="message color-21">
+        <p class="content">
+          <span class="message">"My new story "</span>
+          <span class="initials">Krisanne </span>
+        </p>
+        <p class="location">CT</p>
+      </div>
+      <div class="message color-17">
+        <p class="content">
+          <span class="message"
+            >"every TR event is feeling my heart with so much gratitude! happy
+            to meet so many great individuals around the world. "</span
+          >
+          <span class="initials">TaKtyana </span>
+        </p>
+        <p class="location">Canada</p>
+      </div>
+      <div class="message color-05">
+        <p class="content">
+          <span class="message">"Making a difference! "</span>
+          <span class="initials">Camille Cook</span>
+        </p>
+        <p class="location">Tampa, FL.</p>
+      </div>
+      <div class="message color-10">
+        <p class="content">
+          <span class="message"
+            >"I am grateful to learn and grow with you all"</span
+          >
+          <span class="initials">LHH</span>
+        </p>
+        <p class="location">Palm Bay Florida</p>
+      </div>
+      <div class="message color-11">
+        <p class="content">
+          <span class="message"
+            >"I am grateful for the community, love, and compassion everyone's
+            holds for one another! "</span
+          >
+          <span class="initials">Sarah chemaissem</span>
+        </p>
+        <p class="location">Sydney Australia</p>
+      </div>
+    </div>
 
     <footer>Built with love by The Grand Spartans</footer>
     <script src="/scripts/messages.js"></script>

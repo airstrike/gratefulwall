@@ -155,8 +155,8 @@ document
 		}
 	})
 
-// Call loadMessages on page load
-loadMessages()
+// No longer call loadMessages on page load
+// loadMessages()
 
 const messages = document.querySelectorAll("#messages-container .message")
 messages.forEach((message, index) => {

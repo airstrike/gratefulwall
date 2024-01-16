@@ -69,68 +69,56 @@ app.get("/", (req, res) => {
 })
 
 app.get("/messages", async (req, res) => {
-	try {
-		const messages = await fetchMessages()
-		res.json(messages)
-	} catch (error) {
-		console.error("Error fetching messages:", error)
-		res.status(500).send("Error processing request")
-	}
+	// try {
+	// 	const messages = await fetchMessages()
+	// 	res.json(messages)
+	// } catch (error) {
+	// 	console.error("Error fetching messages:", error)
+	// 	res.status(500).send("Error processing request")
+	// }
 })
 
 app.post("/submit", async (req, res) => {
-	try {
-		const { message, initials, location } = req.body
-		const cleanMessage = validator.escape(message)
-
-		const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
-
-		// Basic validation
-		// console.log(cleanMessage, initials, location, created_at)
-		console.log(`${created_at} "${message}" —${initials} @ ${location}`)
-		if (!cleanMessage) {
-			console.log(
-				`${created_at} User posted invalid blank message (empty): ${message}`,
-			)
-			res.status(400).send("Please enter a message ")
-		}
-		if (cleanMessage.length > 500) {
-			console.log(
-				`${created_at} User posted invalid message (too long): ${message}`,
-			)
-			res.status(400).send("Message is too long (500 chars max)")
-		}
-
-		if (initials && initials.length > 50) {
-			console.log(
-				`${created_at} User posted invalid initials: ${initials}`,
-			)
-			res.status(400).send("Invalid initials")
-		}
-
-		if (location && location.length > 100) {
-			console.log(
-				`${created_at} User posted invalid location: ${location}`,
-			)
-			res.status(400).send("Invalid initials")
-		}
-
-		// Insert data into the database
-		await sql`
-		    INSERT INTO wall (message, initials, location, created_at) VALUES (${cleanMessage}, ${initials}, ${location}, ${created_at});
-		  `
-		// Invalidate the cache
-		// await pool.query(
-		// 	"INSERT INTO wall (message, initials, location, created_at) VALUES ($1, $2, $3, $4);",
-		// 	[message, initials, location, created_at],
-		// )
-		invalidateMessageQuery()
-
-		res.send("Message received")
-	} catch (error) {
-		console.error("Error handling POST request:", error)
-		res.status(500).send("Error processing request")
-	}
+	// try {
+	// 	const { message, initials, location } = req.body
+	// 	const cleanMessage = validator.escape(message)
+	// 	const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
+	// 	// Basic validation
+	// 	console.log(`${created_at} "${message}" —${initials} @ ${location}`)
+	// 	if (!cleanMessage) {
+	// 		console.log(
+	// 			`${created_at} User posted invalid blank message (empty): ${message}`,
+	// 		)
+	// 		res.status(400).send("Please enter a message ")
+	// 	}
+	// 	if (cleanMessage.length > 500) {
+	// 		console.log(
+	// 			`${created_at} User posted invalid message (too long): ${message}`,
+	// 		)
+	// 		res.status(400).send("Message is too long (500 chars max)")
+	// 	}
+	// 	if (initials && initials.length > 50) {
+	// 		console.log(
+	// 			`${created_at} User posted invalid initials: ${initials}`,
+	// 		)
+	// 		res.status(400).send("Invalid initials")
+	// 	}
+	// 	if (location && location.length > 100) {
+	// 		console.log(
+	// 			`${created_at} User posted invalid location: ${location}`,
+	// 		)
+	// 		res.status(400).send("Invalid initials")
+	// 	}
+	// 	// Insert data into the database
+	// 	await sql`
+	// 	    INSERT INTO wall (message, initials, location, created_at) VALUES (${cleanMessage}, ${initials}, ${location}, ${created_at});
+	// 	  `
+	// 	invalidateMessageQuery()
+	// 	res.send("Message received")
+	// } catch (error) {
+	// 	console.error("Error handling POST request:", error)
+	// 	res.status(500).send("Error processing request")
+	// }
 })
 
 // Start the server
@@ -182,66 +170,5 @@ function invalidateMessageQuery() {
 	messageCache = {
 		messages: null,
 		lastUpdated: new Date(), // Optionally update the timestamp to the current time
-	}
-}
-
-async function handleGetMessages(req: Request) {
-	try {
-		const messages = await fetchMessages()
-		return new Response(JSON.stringify(messages), {
-			headers: { "Content-Type": "application/json" },
-			status: 200,
-		})
-	} catch (error) {
-		console.error("Error fetching messages:", error)
-		return new Response("Error processing request", { status: 500 })
-	}
-}
-
-async function handlePostRequest(req: Request) {
-	try {
-		const formData = await req.formData()
-		const message = formData.get("message")?.toString().trim()
-		const initials = formData.get("initials")?.toString().trim() || null
-		const location = formData.get("location")?.toString().trim() || null
-		const created_at = moment().utc().format("YYYY-MM-DD HH:mm:ss")
-
-		// Basic validation
-		console.log(message, initials, location, created_at)
-		if (!message || message.length > 500) {
-			// Example length check
-			console.error("Invalid message")
-			return new Response("Invalid message", { status: 400 })
-		}
-
-		if (initials && initials.length > 50) {
-			// Example length check
-			console.error("Invalid initials")
-			return new Response("Invalid initials", { status: 400 })
-		}
-
-		if (location && location.length > 100) {
-			// Example length check
-			console.error("Invalid location")
-			return new Response("Invalid location", { status: 400 })
-		}
-
-		// Insert data into the database
-		await sql`
-		    INSERT INTO wall (message, initials, location, created_at) VALUES (${message}, ${initials}, ${location}, ${created_at});
-		  `
-		// Insert using pool
-		// await pool.query(
-		// 	"INSERT INTO wall (message, initials, location, created_at) VALUES ($1, $2, $3, $4);",
-		// 	[message, initials, location, created_at],
-		// )
-
-		// Invalidate the cache
-		invalidateMessageQuery()
-
-		return new Response("Message received", { status: 200 })
-	} catch (error) {
-		console.error("Error handling POST request:", error)
-		return new Response("Error processing request", { status: 500 })
 	}
 }
